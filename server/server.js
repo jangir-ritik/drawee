@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const cors = require('cors');
 const sharp = require('sharp');
+const os = require('os');
 
 const app = express();
 
@@ -21,8 +22,8 @@ const upload = multer({
 
 app.use(cors());
 
-// Serve static files from the 'public' directory
-app.use(express.static('public'));
+// Use the system's temporary directory
+const tmpDir = os.tmpdir();
 
 app.post('/upload', upload.array('images'), async (req, res) => {
   const files = req.files;
@@ -31,13 +32,13 @@ app.post('/upload', upload.array('images'), async (req, res) => {
   const processingPromises = files.map(async (file) => {
     const ext = '.png'; // or '.jpg' if you prefer JPEG
     const filename = Date.now() + '-' + Math.round(Math.random() * 1E9) + ext;
-    const filepath = path.join('public', filename);
-    
+    const filepath = path.join(tmpDir, filename);
+   
     try {
       await sharp(file.buffer)
         .png() // or .jpeg() for JPEG
         .toFile(filepath);
-      
+     
       convertedFiles.push({
         filename: filename,
         originalname: file.originalname
@@ -52,9 +53,8 @@ app.post('/upload', upload.array('images'), async (req, res) => {
 });
 
 app.get('/images', async (req, res) => {
-  const uploadsDir = path.join(__dirname, 'public');
   try {
-    const files = await fs.readdir(uploadsDir);
+    const files = await fs.readdir(tmpDir);
     // Filter for only .png or .jpg files
     const imageFiles = files.filter(file => ['.png', '.jpg', '.jpeg'].includes(path.extname(file).toLowerCase()));
     res.json({ images: imageFiles });
@@ -62,6 +62,13 @@ app.get('/images', async (req, res) => {
     console.error('Error reading uploads directory:', err);
     res.status(500).json({ error: 'Unable to scan directory' });
   }
+});
+
+// Serve images from the tmp directory
+app.get('/image/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filepath = path.join(tmpDir, filename);
+  res.sendFile(filepath);
 });
 
 const PORT = process.env.PORT || 3000;

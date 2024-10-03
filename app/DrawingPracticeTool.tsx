@@ -244,7 +244,7 @@ export default function DrawingPracticeTool() {
                 {images.length > 0 ? (
                   <div className="relative w-full h-full">
                     <Image
-                      src={`${API_URL}/${images[currentImageIndex]}`}
+                      src={`${API_URL}/image/${images[currentImageIndex]}`}
                       alt={`Drawing reference ${currentImageIndex + 1}`}
                       layout="fill"
                       objectFit="contain"

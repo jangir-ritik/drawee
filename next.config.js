@@ -15,17 +15,17 @@ const nextConfig = {
     });
     return config;
   },
-  images: {
-    domains: [ 'localhost' ],
+images: {
+    domains: ['localhost', 'drawee-server.onrender.com'],
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3001',
-        pathname: '/uploads/**',
+        protocol: 'https',
+        hostname: 'drawee-server.onrender.com',
+        pathname: '/image/**',
       },
     ],
   },
+  output: 'standalone'
 };
 
 module.exports = nextConfig;
