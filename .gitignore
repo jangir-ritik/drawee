@@ -1,57 +1,39 @@
-# Node modules
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
 /node_modules
 /.pnp
 .pnp.js
 
-/server/node_modules
-/server/public
-/server/uploads
-
-# Build output
-/.next/
-/out/
-/build
-
-# Testing coverage
+# testing
 /coverage
 
-# Environment variables
-.env*
-!.env.example  # Include example env file if you have one
+# next.js
+/.next/
+/out/
 
-# Logs
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Miscellaneous files
-.DS_Store
-*.pem
+# local env files
+.env*.local
 
-# Vercel deployment files
+# vercel
 .vercel
 
-# TypeScript build info files
+# typescript
 *.tsbuildinfo
 next-env.d.ts
 
-# IDE and editor specific files
-.vscode/
-.idea/
-*.sublime-workspace
-*.sublime-project
-
-# OS generated files
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# Temporary files
-*.tmp
-*.temp
-
-# Ignore all files in the following directories except for specific files (if needed)
-# Uncomment and modify if you want to keep certain files in these directories.
-/logs/*
-!/logs/important.log  # Example of keeping a specific log file
-
+# user uploads
+/public/uploads/*
+!/public/uploads/.gitkeep

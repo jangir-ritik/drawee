@@ -3,20 +3,14 @@ const nextConfig = {
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|svg)$/i,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            publicPath: '/_next',
-            name: 'static/media/[name].[hash].[ext]',
-          },
-        },
-      ],
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/media/[name].[hash][ext]',
+      },
     });
     return config;
   },
-images: {
-    domains: ['localhost', 'drawee-server.onrender.com'],
+  images: {
     remotePatterns: [
       {
         protocol: 'https',
@@ -25,7 +19,10 @@ images: {
       },
     ],
   },
-  output: 'standalone'
+  output: 'standalone',
+  experimental: {
+    serverComponentsExternalPackages: ['sharp'],
+  },
 };
 
 module.exports = nextConfig;

@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { ChevronLeft, ChevronRight, Pause, Play, StopCircle, Upload } from 'lucide-react'
 import Image from 'next/image'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const API_URL = '';
 
 export default function DrawingPracticeTool() {
   const [images, setImages] = useState<string[]>([])
@@ -65,7 +65,7 @@ export default function DrawingPracticeTool() {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await fetch(`${API_URL}/images`);
+      const response = await fetch(`${API_URL}/api/images`);
       if (!response.ok) {
         throw new Error('Failed to fetch images')
       }
@@ -138,7 +138,7 @@ export default function DrawingPracticeTool() {
 
     try {
       setIsLoading(true);
-      const response = await fetch(`${API_URL}/upload`, {
+      const response = await fetch(`${API_URL}/api/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -244,7 +244,7 @@ export default function DrawingPracticeTool() {
                 {images.length > 0 ? (
                   <div className="relative w-full h-full">
                     <Image
-                      src={`${API_URL}/image/${images[currentImageIndex]}`}
+                      src={`${API_URL}/api/image/${images[currentImageIndex]}`}
                       alt={`Drawing reference ${currentImageIndex + 1}`}
                       layout="fill"
                       objectFit="contain"
