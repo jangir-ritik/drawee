@@ -11,6 +11,7 @@ const nextConfig = {
     return config;
   },
   images: {
+    domains: ['drawee-theta.vercel.app/'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -20,7 +21,6 @@ const nextConfig = {
     ],
   },
   output: 'standalone',
-  
   experimental: {
     serverComponentsExternalPackages: ['sharp'],
   },
