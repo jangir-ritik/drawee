@@ -1,0 +1,9 @@
+{
+    "routes": [
+      {
+        "src": "/api/upload",
+        "methods": ["POST"],
+        "dest": "/api/upload"
+      }
+    ]
+  }

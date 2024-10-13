@@ -5,6 +5,16 @@ import path from 'path';
 import sharp from 'sharp';
 
 export async function POST(request: Request) {
+  const headers = new Headers({
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  });
+
+  if (request.method === 'OPTIONS') {
+    return new NextResponse(null, { headers });
+  }
+
   try {
     const data = await request.formData();
     const files = data.getAll('images') as File[];
@@ -32,4 +42,14 @@ export async function POST(request: Request) {
     console.error('Error processing upload:', error);
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
 }
